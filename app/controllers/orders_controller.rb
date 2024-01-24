@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :set_item, only: [:index, :create]
   def index
-    if @item.order == nil
+    if @item.order == nil && current_user != @item.user
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_address = OrderAddress.new
     else
